@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Repositório de Empreendimentos</title>
+<meta name="description" content="Apresentações e books de empreendimentos para abrir, baixar e enviar ao cliente.">
+<meta property="og:title" content="Repositório de Empreendimentos">
+<meta property="og:description" content="Apresentações e books de empreendimentos de Jundiaí e região.">
+<meta name="theme-color" content="#06060A">
+<style>
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat_400Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat_600SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat_700Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+:root {
+  --fundo: #06060A; --sup: rgba(255,255,255,.045); --sup-forte: rgba(18,18,26,.92);
+  --texto: #EEEEF4; --cinza: #9C9CAA; --linha: rgba(255,255,255,.10); --linha-suave: rgba(255,255,255,.06);
+  --vinho: #E2365F; --vinho-claro: rgba(226,54,95,.16); --ciano: #7CE7FF;
+  --raio: 14px; --t-s: .875rem; --t-xs: .75rem;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--texto); line-height: 1.45;
+  background: var(--fundo);
+  background-image: radial-gradient(900px 500px at 85% -10%, rgba(226,54,95,.20), transparent 60%),
+                    radial-gradient(700px 420px at -10% 10%, rgba(124,231,255,.08), transparent 60%);
+  background-attachment: fixed; min-height: 100vh;
+}
+a { color: inherit; }
+.envolve { max-width: 1240px; margin: 0 auto; padding: 0 16px 48px; }
+@media (min-width: 720px) { .envolve { padding: 0 32px 64px; } }
+header.topo { display: flex; align-items: center; gap: 12px; padding: 22px 0 8px; }
+.marca { width: 40px; height: 40px; border-radius: 11px; background: linear-gradient(135deg, var(--vinho), #7a1630); display: grid; place-items: center; font-weight: 700; font-size: .95rem; box-shadow: 0 6px 24px rgba(226,54,95,.35); flex: none; }
+.topo > div:nth-child(2) { min-width: 0; }
+.topo b { display: block; font-size: .95rem; }
+@media (max-width: 420px) { .topo b { font-size: .85rem; } .topo .portal { padding: 8px 10px; font-size: .8rem; } }
+.topo span { font-size: var(--t-xs); color: var(--cinza); }
+.topo .portal { margin-left: auto; font-size: var(--t-s); font-weight: 600; text-decoration: none; padding: 9px 14px; border: 1px solid var(--linha); border-radius: 10px; background: var(--sup); white-space: nowrap; }
+.topo .portal:hover { border-color: var(--vinho); }
+h1 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); letter-spacing: -.03em; line-height: 1.1; margin: 28px 0 8px; }
+.sub { color: var(--cinza); max-width: 640px; }
+.kpis { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 22px; }
+.kpis div { background: var(--sup); border: 1px solid var(--linha); border-radius: 12px; padding: 10px 16px; }
+.kpis b { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.kpis span { display: block; font-size: var(--t-xs); color: var(--cinza); }
+.filtros { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr) minmax(0,1fr); gap: 12px; align-items: end; background: var(--sup); border: 1px solid var(--linha); border-radius: var(--raio); padding: 14px; position: sticky; top: 8px; z-index: 5; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(14,14,20,.82); }
+@media (max-width: 720px) { .filtros { grid-template-columns: 1fr 1fr; } .f-busca { grid-column: 1 / -1; } }
+.campo { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.campo label { font-size: var(--t-xs); color: var(--cinza); font-weight: 600; }
+input, select { font: inherit; color: var(--texto); background: rgba(255,255,255,.05); border: 1px solid var(--linha); border-radius: 10px; min-height: 44px; padding: 9px 12px; width: 100%; }
+input:focus, select:focus { outline: 2px solid var(--vinho); outline-offset: 1px; }
+select option { background: #121218; }
+.cont { color: var(--cinza); font-size: var(--t-s); margin: 16px 0 14px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+@media (max-width: 400px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--sup); border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: rgba(226,54,95,.45); transform: translateY(-2px); }
+.foto { display: block; aspect-ratio: 16 / 10; position: relative; overflow: hidden; background: rgba(255,255,255,.05); }
+.foto img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .4s ease; }
+a.foto:hover img { transform: scale(1.04); }
+.foto .sem { position: absolute; inset: 0; display: grid; place-items: center; color: var(--cinza); font-size: var(--t-s); background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 12px, rgba(255,255,255,.08) 12px 24px); }
+.tags { position: absolute; left: 12px; top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: var(--t-xs); font-weight: 600; padding: 3px 10px; border-radius: 999px; background: rgba(10,10,15,.75); border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(6px); }
+.chip.dest { background: var(--vinho); border-color: var(--vinho); }
+.corpo { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
+.corpo h2 { font-size: 1.12rem; letter-spacing: -.01em; }
+.onde { color: var(--cinza); font-size: var(--t-s); }
+.docs { list-style: none; padding: 0; margin: 12px 0 0; border-top: 1px solid var(--linha-suave); }
+.doc { display: flex; flex-direction: column; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--linha-suave); }
+.doc .l1 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.doc b { font-size: var(--t-s); }
+.doc .meta { font-size: var(--t-xs); color: var(--cinza); white-space: nowrap; }
+.acoes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; padding: 6px 10px; border-radius: 9px; border: 1px solid var(--linha); background: rgba(255,255,255,.05); color: var(--texto); font-size: .8rem; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn:hover { border-color: rgba(255,255,255,.3); }
+.btn.prim { background: var(--vinho); border-color: var(--vinho); color: #fff; }
+.btn.prim:hover { filter: brightness(1.08); }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.btn:focus-visible { outline: 2px solid var(--ciano); outline-offset: 2px; }
+.pend { font-size: var(--t-xs); color: var(--cinza); }
+.portal-link { margin-top: 12px; align-self: flex-start; }
+.vazio { grid-column: 1 / -1; text-align: center; padding: 48px 16px; border: 1px dashed var(--linha); border-radius: var(--raio); color: var(--cinza); }
+.vazio h3 { color: var(--texto); margin-bottom: 6px; }
+footer { color: var(--cinza); font-size: var(--t-xs); margin-top: 40px; text-align: center; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="envolve">
+  <header class="topo">
+    <div class="marca" aria-hidden="true">RE</div>
+    <div><b>Repositório de Empreendimentos</b><span>Coordenação Franco</span></div>
+    <a class="portal" href="https://augusto-franco2610.github.io/portal-empreendimentos/" target="_blank" rel="noopener">Portal e simulador</a>
+  </header>
+  <main>
+    <h1>Apresentações e books</h1>
+    <p class="sub">Encontre o material do empreendimento, abra no celular, baixe ou mande direto para o cliente pelo WhatsApp.</p>
+    <div class="kpis" id="kpis"></div>
+    <div class="filtros" role="search">
+      <div class="campo f-busca"><label for="q">Buscar</label><input id="q" type="search" placeholder="Nome do empreendimento ou incorporadora" autocomplete="off"></div>
+      <div class="campo"><label for="inc">Incorporadora</label><select id="inc"><option value="">Todas</option></select></div>
+      <div class="campo"><label for="tipo">Material</label><select id="tipo"><option value="">Todos</option><option value="apres">Apresentações</option><option value="book">Books e e-books</option><option value="impl">Implantações e outros</option></select></div>
+    </div>
+    <p class="cont" id="cont" aria-live="polite">Carregando…</p>
+    <div class="cards" id="lista"></div>
+  </main>
+  <footer id="rodape"></footer>
+</div>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const I = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  const IC = {
+    ver: I('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+    baixar: I('<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/>'),
+    zap: I('<path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 10c0 3 2 5 5 5l1.5-1.5-2-1-1 1c-1-.4-1.6-1-2-2l1-1-1-2z"/>'),
+    predio: I('<path d="M4 21V5l8-2v18"/><path d="M12 8l8 2v11"/><path d="M8 8h.01M8 12h.01M8 16h.01M16 13h.01M16 17h.01"/>')
+  };
+  const semAcento = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const base = location.href.split('#')[0].split('?')[0];
+  const abs = (rel) => new URL(rel, base).href;
+  const tipoGrupo = (t) => (/book/i.test(t) ? 'book' : /apresenta/i.test(t) ? 'apres' : 'impl');
+  const PORTAL = 'https://augusto-franco2610.github.io/portal-empreendimentos/';
+  const dataBR = (iso) => iso ? iso.slice(0, 10).split('-').reverse().join('/') : '';
+
+  const doc = (e, a) => {
+    if (!a.arquivo) return `<li class="doc"><div class="l1"><b>${esc(a.tipo)}</b></div><span class="pend">Ainda não disponível aqui — peça ao Franco</span></li>`;
+    const msg = `*${e.nome}*${e.incorporadora ? ` (${e.incorporadora})` : ''}\n${a.tipo}: ${abs(a.arquivo)}`;
+    const nomeArq = `${e.nome} - ${a.tipo}.pdf`.replace(/[\\/:*?"<>|]/g, '');
+    return `<li class="doc"><div class="l1"><b>${esc(a.tipo)}</b><span class="meta">${a.paginas ? `${a.paginas} páginas · ` : ''}${String(a.mb).replace('.', ',')} MB</span></div>
+      <div class="acoes"><a class="btn" href="${esc(a.arquivo)}" target="_blank" rel="noopener">${IC.ver}Abrir</a>
+      <a class="btn" href="${esc(a.arquivo)}" download="${esc(nomeArq)}" aria-label="Baixar ${esc(a.tipo)} do ${esc(e.nome)}">${IC.baixar}Baixar</a>
+      <a class="btn prim" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" aria-label="Enviar ${esc(a.tipo)} do ${esc(e.nome)} pelo WhatsApp">${IC.zap}Enviar</a></div></li>`;
+  };
+  const card = (e) => {
+    const prim = e.arquivos.find((a) => a.arquivo);
+    const img = e.capa ? `<img src="${esc(e.capa)}" alt="Capa do material do ${esc(e.nome)}" loading="lazy">` : '<div class="sem">Sem capa</div>';
+    const tags = `<div class="tags">${e.pagina ? '<span class="chip dest">Coordenação Franco</span>' : ''}${e.arquivos.length > 1 ? `<span class="chip">${e.arquivos.length} materiais</span>` : ''}</div>`;
+    const foto = prim ? `<a class="foto" href="${esc(prim.arquivo)}" target="_blank" rel="noopener" aria-label="Abrir ${esc(prim.tipo)} do ${esc(e.nome)}">${img}${tags}</a>` : `<div class="foto">${img}${tags}</div>`;
+    return `<article class="card">${foto}<div class="corpo"><h2>${esc(e.nome)}</h2><p class="onde">${esc(e.incorporadora || 'Incorporadora não informada')}</p>
+      <ul class="docs">${e.arquivos.map((a) => doc(e, a)).join('')}</ul>
+      ${e.pagina ? `<a class="btn portal-link" href="${PORTAL}#${esc(e.pagina)}" target="_blank" rel="noopener">${IC.predio}Ficha completa e simulador</a>` : ''}</div></article>`;
+  };
+
+  fetch('acervo.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(); return r.json(); }).then((A) => {
+    const itens = A.itens;
+    const incs = [...new Set(itens.map((i) => i.incorporadora).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt'));
+    const nArq = itens.reduce((t, i) => t + i.arquivos.filter((a) => a.arquivo).length, 0);
+    $('#inc').insertAdjacentHTML('beforeend', incs.map((x) => `<option>${esc(x)}</option>`).join(''));
+    $('#kpis').innerHTML = `<div><b>${itens.length}</b><span>empreendimentos</span></div><div><b>${incs.length}</b><span>incorporadoras</span></div><div><b>${nArq}</b><span>materiais em PDF</span></div>`;
+    $('#rodape').textContent = `Atualizado em ${dataBR(A.gerado_em)}. Materiais oficiais das incorporadoras; valores e disponibilidade podem mudar.`;
+    const params = new URLSearchParams(location.search);
+    if (params.get('q')) $('#q').value = params.get('q');
+    const filtrar = () => {
+      const q = semAcento($('#q').value.trim()), inc = $('#inc').value, tp = $('#tipo').value;
+      const res = itens.filter((e) => (!q || semAcento(`${e.nome} ${e.incorporadora}`).includes(q)) && (!inc || e.incorporadora === inc) && (!tp || e.arquivos.some((a) => tipoGrupo(a.tipo) === tp)))
+        .sort((a, b) => (b.pagina ? 1 : 0) - (a.pagina ? 1 : 0) || (b.arquivos.some((x) => x.arquivo) ? 1 : 0) - (a.arquivos.some((x) => x.arquivo) ? 1 : 0) || a.nome.localeCompare(b.nome, 'pt'));
+      $('#cont').textContent = res.length === itens.length ? `${res.length} empreendimentos` : `${res.length} de ${itens.length} empreendimentos`;
+      $('#lista').innerHTML = res.length ? res.map(card).join('') : '<div class="vazio"><h3>Nada encontrado</h3><p>Tente outro nome ou limpe os filtros.</p></div>';
+    };
+    $('#q').addEventListener('input', filtrar); $('#inc').addEventListener('change', filtrar); $('#tipo').addEventListener('change', filtrar);
+    filtrar();
+  }).catch(() => { $('#cont').textContent = 'Não foi possível carregar a lista. Verifique a internet e recarregue a página.'; });
+})();
+</script>
+</body>
+</html>
