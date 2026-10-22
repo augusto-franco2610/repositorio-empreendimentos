@@ -81,6 +81,7 @@ a.foto:hover img { transform: scale(1.04); }
 .btn:focus-visible { outline: 2px solid var(--ciano); outline-offset: 2px; }
 .pend { font-size: var(--t-xs); color: var(--cinza); }
 .portal-link { margin-top: 12px; align-self: flex-start; }
+.portal-link + .portal-link { margin-top: 8px; }
 .vazio { grid-column: 1 / -1; text-align: center; padding: 48px 16px; border: 1px dashed var(--linha); border-radius: var(--raio); color: var(--cinza); }
 .vazio h3 { color: var(--texto); margin-bottom: 6px; }
 footer { color: var(--cinza); font-size: var(--t-xs); margin-top: 40px; text-align: center; }
@@ -140,9 +141,11 @@ footer { color: var(--cinza); font-size: var(--t-xs); margin-top: 40px; text-ali
     const prim = e.arquivos.find((a) => a.arquivo);
     const img = e.capa ? `<img src="${esc(e.capa)}" alt="Capa do material do ${esc(e.nome)}" loading="lazy">` : '<div class="sem">Sem capa</div>';
     const tags = `<div class="tags">${e.pagina ? '<span class="chip dest">Coordenação Franco</span>' : ''}${e.arquivos.length > 1 ? `<span class="chip">${e.arquivos.length} materiais</span>` : ''}</div>`;
-    const foto = prim ? `<a class="foto" href="${esc(prim.arquivo)}" target="_blank" rel="noopener" aria-label="Abrir ${esc(prim.tipo)} do ${esc(e.nome)}">${img}${tags}</a>` : `<div class="foto">${img}${tags}</div>`;
-    return `<article class="card">${foto}<div class="corpo"><h2>${esc(e.nome)}</h2><p class="onde">${esc(e.incorporadora || 'Incorporadora não informada')}</p>
+    const pg = `empreendimento/${encodeURIComponent(e.slug)}.html`;
+    const foto = `<a class="foto" href="${pg}" aria-label="Ver detalhes do ${esc(e.nome)}">${img}${tags}</a>`;
+    return `<article class="card">${foto}<div class="corpo"><h2><a href="${pg}" style="text-decoration:none">${esc(e.nome)}</a></h2><p class="onde">${esc(e.incorporadora || 'Incorporadora não informada')}</p>
       <ul class="docs">${e.arquivos.map((a) => doc(e, a)).join('')}</ul>
+      <a class="btn prim portal-link" href="${pg}">Ver detalhes</a>
       ${e.pagina ? `<a class="btn portal-link" href="${PORTAL}#${esc(e.pagina)}" target="_blank" rel="noopener">${IC.predio}Ficha completa e simulador</a>` : ''}</div></article>`;
   };
 
